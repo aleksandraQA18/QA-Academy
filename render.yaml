@@ -1,0 +1,16 @@
+# Exported from Render on 2026-10-08T05:25:44Z
+version: "1"
+projects:
+- name: QA Academy
+  environments:
+  - name: STAGE
+    databases:
+    - name: qa-app-db
+      databaseName: orders_ntcz
+      user: order_user
+      plan: free
+      region: frankfurt
+      ipAllowList:
+      - source: 0.0.0.0/0
+        description: everywhere
+      postgresMajorVersion: "18"
