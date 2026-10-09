@@ -23,9 +23,9 @@ jobs:
       postgres:
         image: postgres:18
         env:
-          DB_USER: ${{ env.DB_USER }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
-          DB_NAME: ${{ env.DB_NAME }}
+          POSTGRES_USER: ${{env.DB_USER}}
+          POSTGRES_PASSWORD: ${{env.DB_PASSWORD}}
+          POSTGRES_DB: ${{env.DB_NAME}}
         ports:
           - 5432:5432
         options: >-
@@ -56,9 +56,9 @@ jobs:
         env:
           DB_HOST: localhost
           DB_PORT: 5432
-          DB_USER: ${{ env.DB_USER }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
-          DB_NAME: ${{ env.DB_NAME }}
+          DB_USER: ${{env.DB_USER}}
+          DB_PASSWORD: ${{env.DB_PASSWORD}}
+          DB_NAME: ${{env.DB_NAME}}
         run: |
           python -c "import psycopg; conn = psycopg.connect(host='$DB_HOST', port='$DB_PORT', dbname='$DB_NAME', user='$DB_USER', password='$DB_PASSWORD'); conn.close(); print('Database connection OK')"
 
@@ -67,9 +67,9 @@ jobs:
         env:
           DB_HOST: localhost
           DB_PORT: 5432
-          DB_USER: ${{ env.DB_USER }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
-          DB_NAME: ${{ env.DB_NAME }}
+          DB_USER: ${{env.DB_USER}}
+          DB_PASSWORD: ${{env.DB_PASSWORD}}
+          DB_NAME: ${{env.DB_NAME}}
         run: alembic upgrade head
 
       - name: Start API server
@@ -77,20 +77,20 @@ jobs:
         env:
           DB_HOST: localhost
           DB_PORT: 5432
-          DB_USER: ${{ env.DB_USER }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
-          DB_NAME: ${{ env.DB_NAME }}
+          DB_USER: ${{env.DB_USER}}
+          DB_PASSWORD: ${{env.DB_PASSWORD}}
+          DB_NAME: ${{env.DB_NAME}}
         run: |
-          uvicorn src.main:app --host 0.0.0.0 --port 8000 &
+          uvicorn main:app --host 0.0.0.0 --port 8000 &
           sleep 2
 
       - name: Run tests
         env:
           DB_HOST: localhost
           DB_PORT: 5432
-          DB_NAME: ${{ env.DB_NAME }}
-          DB_USER: ${{ env.DB_USER }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
+          DB_NAME: ${{env.DB_NAME}}
+          DB_USER: ${{env.DB_USER}}
+          DB_PASSWORD: ${{env.DB_PASSWORD}}
           PYTHONPATH: backend
         run: pytest -v
 
