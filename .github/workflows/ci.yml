@@ -110,6 +110,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Install dependencies
+        run: pip install -r backend/requirements-dev.txt
+
       - name: Build container-test
         run: docker compose -f compose.yml build
 
