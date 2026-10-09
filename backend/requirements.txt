@@ -3,3 +3,5 @@ uvicorn==0.52.4
 psycopg[binary]
 SQLAlchemy==2.0.52
 alembic==1.16.5
+requests==2.34.2
+Faker==40.39.0
