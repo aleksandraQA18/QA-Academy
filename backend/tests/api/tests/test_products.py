@@ -1,8 +1,10 @@
+import pytest
 from config import LOG
 from src.clients.product_client import Products
 from src.factory.product_factory import create_new_product
 
 
+@pytest.mark.smoke
 def test_get_all_products():
     LOG.info("test_get_all_products")
     response = Products().get_all_products()
@@ -12,6 +14,7 @@ def test_get_all_products():
     assert response.ok
 
 
+@pytest.mark.smoke
 def test_get_product_by_id(generate_new_product):
     LOG.info("test_get_product_by_id")
     response = Products().get_product_by_id(generate_new_product["id"])

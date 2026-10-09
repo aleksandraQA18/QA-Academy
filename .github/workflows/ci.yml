@@ -92,6 +92,7 @@ jobs:
           DB_USER: ${{env.DB_USER}}
           DB_PASSWORD: ${{env.DB_PASSWORD}}
           PYTHONPATH: backend
+          BASE_URL: http://localhost:8000
         run: pytest -v
 
   container-test:
@@ -128,8 +129,10 @@ jobs:
           done
           exit 1
 
-      - name: Smoke test API
-        run: curl --fail http://localhost:8000/health
+      - name: Smoke tests (stage)
+        env:
+          BASE_URL: ${{vars.STAGE_URL}}
+        run: pytest -m smoke
 
       - name: Show container-test logs
         if: always()
