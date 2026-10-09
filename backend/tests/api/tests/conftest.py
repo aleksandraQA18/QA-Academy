@@ -11,9 +11,9 @@ def base_url():
 
 
 @pytest.fixture
-def generate_new_product():
+def generate_new_product(base_url):
     payload = create_new_product()
-    response = Products().create_product(payload)
+    response = Products().create_product(base_url, payload)
 
     product = response.json()
     # yield product
