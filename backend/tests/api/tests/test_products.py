@@ -5,9 +5,9 @@ from src.factory.product_factory import create_new_product
 
 
 @pytest.mark.smoke
-def test_get_all_products():
+def test_get_all_products(base_url):
     LOG.info("test_get_all_products")
-    response = Products().get_all_products()
+    response = Products().get_all_products(base_url)
     response_json = response.json()
     LOG.debug(response_json)
 
@@ -15,9 +15,9 @@ def test_get_all_products():
 
 
 @pytest.mark.smoke
-def test_get_product_by_id(generate_new_product):
+def test_get_product_by_id(base_url, generate_new_product):
     LOG.info("test_get_product_by_id")
-    response = Products().get_product_by_id(generate_new_product["id"])
+    response = Products().get_product_by_id(base_url, generate_new_product["id"])
     response_json = response.json()
     LOG.debug(response_json)
 
@@ -25,13 +25,13 @@ def test_get_product_by_id(generate_new_product):
     assert response_json["id"] == generate_new_product["id"]
 
 
-def test_create_new_product():
+def test_create_new_product(base_url):
     LOG.info("test_create_new_product")
 
     payload = create_new_product()
 
     LOG.debug(payload)
-    response = Products().create_product(payload)
+    response = Products().create_product(base_url, payload)
     response_json = response.json()
     LOG.debug(response_json)
 
